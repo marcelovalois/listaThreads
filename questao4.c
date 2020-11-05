@@ -16,8 +16,8 @@ void funexec(pessoa a) {
     printf("%c %d\n", a.genero, a.idade);
 }
 
-void agendarExecucao(void (*fun)(pessoa), pessoa p) {
-    (*fun)(p);
+void agendarExecucao(void (*func)(pessoa), pessoa p) {
+    (*func)(p);
 }
 
 
@@ -29,8 +29,7 @@ int main() {
     x.genero = 'm'; x.idade = 23;
 
     agendarExecucao(funexec, x);
-
-
+    
 
 
 
