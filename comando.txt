@@ -1,1 +1,5 @@
 gcc -pthread prog.c -o prog
+
+link da lista:
+
+https://docs.google.com/document/d/1GtarXAcxEVgvUsS3mW_Zwt7xRa5frm1oUq_fQcRl59I/edit
