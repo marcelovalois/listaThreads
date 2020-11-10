@@ -2,8 +2,10 @@
 #include <pthread.h> 
 #include <stdlib.h>
 
-#define I 4
-#define P 10
+#define I 4 // NÃO PODE SER ALTERADO PARA TESTES DEVIDO À MATRIZ ESTÁTICA!
+#define P 10 // QUANTIDADE DE ITERAÇÕES
+
+int n;
 
 pthread_barrier_t barrier;
 
@@ -26,21 +28,26 @@ void* jacobi(void* i) {
 
     while ( k < P ) {
         aux[0] = X[0], aux[1] = X[1], aux[2] = X[2], aux[3] = X[3];
-        sum = 0;
+
 
         pthread_barrier_wait(&barrier);
 
+        while(id < I) {
 
-        for (j = 0; j < I; j++) {
-            if (j != id){
-                sum += (float) A[id][j] * aux[j]; 
+            sum = 0;
+            for (j = 0; j < I; j++) {
+                if (j != id){
+                    sum += (float) A[id][j] * aux[j]; 
+                }
             }
+
+            X[id] = (B[id] - sum) / A[id][id];
+
+            id += n;
         }
-
-        X[id] = (B[id] - sum) / A[id][id];
+        
+        id -= I;
         k = k + 1;
-
-        printf("ID: %d  iteracao: %d  X: %f\n", id, k, X[id]);
 
         pthread_barrier_wait(&barrier);
         }
@@ -52,7 +59,7 @@ void* jacobi(void* i) {
 
 int main() {
 
-    int t, n, k=0;
+    int t, k=0;
 
     printf("Digite a quantidade de threads: ");
     scanf("%d", &n);
@@ -64,7 +71,7 @@ int main() {
 
     for (t = 0; t < n; t++) {
         tasksids[t] = (int *) malloc(sizeof(int));
-        *tasksids[t] = t % I;
+        *tasksids[t] = t;
         pthread_create(&threads[t], NULL, jacobi, (void*) tasksids[t]);
     }
 
