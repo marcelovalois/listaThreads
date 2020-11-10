@@ -77,7 +77,7 @@ int main() {
 
     for(t = 0; t < n; t++) { pthread_join(threads[t], NULL); }
 
-    printf("Resposta Final: x1: %f, x2: %f, x3: %f, x4: %f\n", X[0], X[1], X[2], X[3]);
+    printf("Resposta Final:\nx1: %f\nx2: %f\nx3: %f\nx4: %f\n", X[0], X[1], X[2], X[3]);
 
     pthread_barrier_destroy(&barrier);
 
